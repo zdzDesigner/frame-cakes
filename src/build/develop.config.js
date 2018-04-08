@@ -8,7 +8,6 @@ var shell = require('shelljs')
 var babel = require('babel-core')
 var flow = require('flow-bin')
 var getConfig = require('./base.config.js')
-var FlowtypePlugin = require('flowtype-loader/plugin')
 // var BrowserSync = require('browser-sync-webpack-plugin')
 
 module.exports = exec
