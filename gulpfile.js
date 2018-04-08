@@ -12,13 +12,18 @@ var scripts =  {
 }
 
 function build(){
-    clean.sync(scripts.dest)
     return gulp.src(scripts.src)
         .pipe(taskBabel({
             presets: ["babel-preset-es2015","stage-0"],
             plugins: ['transform-runtime',"transform-flow-strip-types"]
         }))
         .pipe(gulp.dest(scripts.dest))
+}
+
+function watch() {
+  clean.sync(scripts.dest)
+  build()
+  gulp.watch(scripts.src, build);
 }
 
 function taskBabel (config){
@@ -31,4 +36,4 @@ function taskBabel (config){
 }
 
 
-gulp.task('default', build)
+gulp.task('default', watch)
