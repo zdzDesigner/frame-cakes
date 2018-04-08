@@ -10,7 +10,6 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
-var NameAllModulesPlugin = require('name-all-modules-plugin')
 
 
 module.exports = getConfig
