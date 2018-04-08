@@ -1,14 +1,11 @@
 var webpack = require('webpack')
 var merge = require('webpack-merge')
-var getConfig = require('./base.config.js')
+var config = require(process.cwd()+'/webpack.config.js')
 
 module.exports = exec
 
 function exec(conf, webpackExtend){
-    var config = getConfig({
-        publicPath:conf.publicPath,
-        version:conf.version
-    })
+    
 
     var webpackConfig = merge.smart(config, {
         plugins: [

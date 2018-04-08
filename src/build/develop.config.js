@@ -7,24 +7,19 @@ var spawn = require('child_process').spawn
 var shell = require('shelljs')
 var babel = require('babel-core')
 var flow = require('flow-bin')
-var getConfig = require('./base.config.js')
+var config = require(process.cwd()+'/webpack.config.js')
+var _package = require(process.cwd()+'/package.json')
 // var BrowserSync = require('browser-sync-webpack-plugin')
 
 module.exports = exec
 
 function exec(conf, webpackExtend){
-    var publicPath = conf.publicPath 
-    var version = conf.version 
+    var publicPath = _package.publicPath
     var defaultPort = conf.port 
     var env = getArgv()
     var port = env.port || defaultPort || 8088
     var mock = env.mock || false
     var toshell = false
-
-    var config = getConfig({
-        publicPath:publicPath,
-        version:version
-    })
 
     var webpackConfig = merge.smart(config, {
         watch: true,
@@ -50,8 +45,7 @@ function exec(conf, webpackExtend){
                 'APP_MOCK': JSON.stringify(mock),
                 'APP_PORT': JSON.stringify(port)
             }),
-            new NyanProgressPlugin(),
-            new FlowtypePlugin()
+            new NyanProgressPlugin()
 
         ]
     })
