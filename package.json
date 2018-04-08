@@ -1,0 +1,29 @@
+{
+  "name": "aife-vue-base",
+  "version": "0.1.0",
+  "description": "aife base util",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "start": "gulp"
+  },
+  "author": "zdzDesigner",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.0.0",
+    "babel-plugin-transform-flow-strip-types": "^6.0.0",
+    "babel-plugin-transform-runtime": "^6.0.0",
+    "babel-preset-es2015": "^6.0.0",
+    "babel-preset-stage-0": "^6.0.0",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-concat": "^2.6.1",
+    "through2": "^2.0.3"
+  },
+  "dependencies": {}
+}
