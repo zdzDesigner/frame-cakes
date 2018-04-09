@@ -18,7 +18,9 @@ function getConfig(conf, webpackExtend) {
 
     var publicPath = conf.publicPath || '/'
     var version = conf.version || 'v0.1.0'
+    var title = conf.title || '前端基础构建'
     var dirname = conf.dirname || process.cwd()
+    var ENV = process.env.NODE_ENV
     console.log('dirname:',dirname)
 
     var config = {
@@ -80,7 +82,7 @@ function getConfig(conf, webpackExtend) {
                 dry: false
             }),
             new webpack.DefinePlugin({
-                'APP_ENV': JSON.stringify(process.env.NODE_ENV),
+                'APP_ENV': JSON.stringify(ENV),
                 'APP_VERSION': JSON.stringify(version)
             }),
             new webpack.optimize.CommonsChunkPlugin({
@@ -94,8 +96,9 @@ function getConfig(conf, webpackExtend) {
             new InlineManifestWebpackPlugin(),
             new ExtractTextPlugin('style/app_[chunkhash:8].css'),
             new HtmlWebpackPlugin({
-                title:'前端基础构建',
+                title:title,
                 template:'index.ejs',
+                env:ENV ? '':'http://172.16.20.47',
                 chunks: ['app'],
                 inject:false,
                 minify: {
