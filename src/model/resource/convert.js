@@ -38,6 +38,7 @@ function convert(sub){
         let abort = item.abort
         let binary = item.binary || false
         let response = item.response || false
+        let compile = typeof item.compile == 'boolean' ? item.compile : true;
         // console.log(item)
         // let XHR = response ? axios : axiosData
         let XHR = axios
@@ -49,12 +50,12 @@ function convert(sub){
 
         ctx[key] = function(parse, data=null, config=null){
             let pend = null
-            let url = parseText(rawUrl,parse)
+            let url = compile ? parseText(rawUrl,parse) : rawUrl
 
             logger('frame','--- %s',rawUrl)
             logger('frame','+++ %s method:%s',url,method)
 
-            if(!rawUrl.match(/\{(.+?)\}/)){
+            if(compile && !rawUrl.match(/\{(.+?)\}/)){
                 if(config){
                     logger('frame','~url参数%s貌似无用',JSON.stringify(parse))    
                 }else{
@@ -62,6 +63,10 @@ function convert(sub){
                     data = parse
                     parse = null
                 }
+            }else{
+                config = data;
+                data = parse;
+                parse = null;
             }
             
             if(~headRequest.indexOf(method)){
