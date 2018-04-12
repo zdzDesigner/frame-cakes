@@ -55,19 +55,21 @@ function convert(sub){
             logger('frame','--- %s',rawUrl)
             logger('frame','+++ %s method:%s',url,method)
 
-            if(compile && !rawUrl.match(/\{(.+?)\}/)){
-                if(config){
-                    logger('frame','~url参数%s貌似无用',JSON.stringify(parse))    
-                }else{
-                    config = data
-                    data = parse
-                    parse = null
+            if (compile && !rawUrl.match(/\{(.+?)\}/)) {
+                if (config) {
+                    logger('frame', '~url参数%s貌似无用', (0, _stringify2.default)(parse));
+                } else {
+                    config = data;
+                    data = parse;
+                    parse = null;
                 }
-            }else{
+            }
+            if(!compile){
                 config = data;
                 data = parse;
                 parse = null;
             }
+
             
             if(~headRequest.indexOf(method)){
                 config = data

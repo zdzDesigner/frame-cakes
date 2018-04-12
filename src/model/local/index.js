@@ -1,34 +1,28 @@
 import store from 'store2'
+import cookie from 'js-cookie'
 
-var cookie = store.cookie = {}
-cookie.get = function (cookie_name) {
-    var strCookie = document.cookie
-    var arrCookie = strCookie.split('; ')
-    for(var i = 0; i < arrCookie.length; i++){
-        var arr = arrCookie[i].split('=')
-        if(cookie_name == arr[0]){
-            return arr[1]
-        }
+/**
+ * [clear 清除cookie]
+ * @ 清除单个 || 全部cookie 
+ * @ feature 清除 指定 domain 全部cookie
+ */
+cookie.clear = function(...arg){
+    // const firstKey =  arg[0]
+    if(!arg.length){
+        let cookies = cookie.get()
+        Object.keys(cookies).forEach(function(key){
+            cookie.remove.call(null,key)    
+        })
+    }else{
+        cookie.remove.apply(null,arg)    
     }
-    return ''
+    
 }
-
-cookie.set = function (cname, cvalue, exdays) {
-    var d = new Date()
-    d.setTime(d.getTime() + (exdays*24*60*60*1000))
-    var expires = 'expires='+d.toUTCString()
-    document.cookie = cname + '=' + cvalue + '; ' + expires
-}
-
-cookie.clear = function (name) {  
-    cookie.set(name, '', -1)
-} 
-
 
 export default {
     $local:store.local,
     $session:store.session,
-    $cookie:store.cookie
+    $cookie:cookie
 }
 // console.log(Object.keys(store) 
 //             ,Object.keys(store.local) 
