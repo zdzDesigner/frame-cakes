@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 const merge = Vue.util.mergeOptions
 const urlTpl = function(){}
 
