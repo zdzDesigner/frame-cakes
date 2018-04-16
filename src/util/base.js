@@ -4,10 +4,12 @@ const merge = Vue.util.mergeOptions
 const urlTpl = function(){}
 
 
-
-const isObject = function(val){ 
-   return Object.prototype.toString.call(val) == '[object Object]' 
+function getType(val,type){
+    return Object.prototype.toString.call(val) == `[object ${type}]`
 }
+
+const isObject = (val)=> getType(val, 'Object')
+const isFunction = (val)=> getType(val, 'Function')
 
 /**
  * [mergeMulti description]
@@ -23,6 +25,7 @@ const mergeMulti = function(data,...args){
 
 
 export default {
+    isFunction,
     isObject,
     merge,
     mergeMulti,

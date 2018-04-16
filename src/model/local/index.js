@@ -24,6 +24,3 @@ export default {
     $session:store.session,
     $cookie:cookie
 }
-// console.log(Object.keys(store) 
-//             ,Object.keys(store.local) 
-//             ,Object.keys(store.session));
