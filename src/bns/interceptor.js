@@ -6,13 +6,13 @@ import local from '../model/local'
 export default function auth(aop){
 
     return function (response) {
-        console.log(response.data)
+        // console.log(response.data)
         if( response.data.code == '103108' || response.data.code == '103144' 
             || response.data.errId == '103108' || response.data.errId == '103144'){
             local.$cookie.clear('TOKEN')
-            local.$cookie.clear('TOKEN',{ domian : '.'+ util.parseURL(location.href).host })
+            local.$cookie.clear('TOKEN',{ domain : '.'+ util.parseURL(location.href).host })
             local.$cookie.clear('groupKey')
-            local.$cookie.clear('groupKey',{ domian : '.'+ util.parseURL(location.href).host })
+            local.$cookie.clear('groupKey',{ domain : '.'+ util.parseURL(location.href).host })
             location.href = util.getRedirectUrl()
         }
         util.isFunction(aop) && aop(response)
