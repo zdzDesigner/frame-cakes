@@ -7,6 +7,9 @@ const axios = Axios.create()
 
 const CancelToken = Axios.CancelToken
 
+const requestGet = ()=>{}
+const requestPost = ()=>{}
+
 
 // const abort = Axios.CancelToken.source()
 // axios.abort = abort
