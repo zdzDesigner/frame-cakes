@@ -1,5 +1,5 @@
 import Axios from 'axios'
-import core from 'UTIL'
+import core from '../../util'
 
 
 const { parseText, logger } = core
@@ -92,7 +92,22 @@ function convert(sub){
                     : XHR[method](url,data,config)
             }
 
-            return pend
+            // return pend
+
+            pend.catch(function(err){
+                // console.log({err})
+            })
+
+            return {
+                then:function(res, rej){
+                    rej = rej || function(){}
+                    return pend.then(res,rej)
+                },
+                catch:function(capture){
+                    capture = capture || function(){}
+                    return pend.catch(capture)
+                }
+            }
         }
         return ctx
         

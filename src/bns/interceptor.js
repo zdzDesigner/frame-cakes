@@ -1,19 +1,19 @@
 import util from '../util'
 import local from '../model/local'
+import logout from './logout.js'
+import { setToken } from './set-headers.js'
 
 
 
-export default function auth(aop){
+
+export default function authUpdate(aop){
 
     return function (response) {
+        setToken()
         // console.log(response.data)
         if( response.data.code == '103108' || response.data.code == '103144' 
             || response.data.errId == '103108' || response.data.errId == '103144'){
-            local.$cookie.clear('TOKEN')
-            local.$cookie.clear('TOKEN',{ domain : '.'+ util.parseURL(location.href).host })
-            local.$cookie.clear('groupKey')
-            local.$cookie.clear('groupKey',{ domain : '.'+ util.parseURL(location.href).host })
-            location.href = util.getRedirectUrl()
+            logout()
         }
         util.isFunction(aop) && aop(response)
         return response
