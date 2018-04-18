@@ -85,3 +85,12 @@ export default {
 ### local 封装
 
 ### 构建封装
+
+
+### 鉴权封装
+
+由于服务端权限半小时失效，后续 token 从拦截器中刷新；固升级 aife-vue-base@0.2.6 版本
+版本中添加3个api 分别为 权限初始、更新、销毁
+auth.init()    
+auth.update()
+auth.destroy()

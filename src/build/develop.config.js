@@ -19,6 +19,7 @@ function exec(conf, webpackExtend){
     var env = getArgv()
     var port = env.port || defaultPort || 8088
     var mock = env.mock || false
+    var isflow = env.flow || false
     var toshell = false
 
     var webpackConfig = merge.smart(config, {
@@ -52,16 +53,33 @@ function exec(conf, webpackExtend){
 
     if(webpackExtend) webpackConfig = merge.smart(webpackConfig,webpackExtend)
 
+    if(!isflow){
+        webpackConfig.module.rules.forEach(function(item){
+            if(item.loader == 'vue-loader'){
+                var loaders = [].concat(item.options.preLoaders.js)
+                console.log(loaders)
+                
+                loaders = loaders.filter((loader) => 'vue-flow-loader' != loader )
+                if(!loaders.length){
+                    delete item.options.preLoaders.js    
+                }
+                
+            }
+        })
+    }
 
     webpack(webpackConfig, function(err, status) {
         if (err) throw err
 
-        spawn('flow', {
-            stdio: 'inherit',
-            shell: true
-        }).on('exit', function(code, err) {
-            console.log(colors.green('flow logs =============='), '\n\n')
-        })
+        if(isflow){
+            spawn('flow', {
+                stdio: 'inherit',
+                shell: true
+            }).on('exit', function(code, err) {
+                console.log(colors.green('flow logs =============='), '\n\n')
+            })
+        }
+        
 
         process.stdout.write(status.toString({
             colors: true,
@@ -124,8 +142,8 @@ function getAllArgv() {
  * @return {[]} [undefined || port]
  */
 function getArgv() {
-    var argv = getAllArgv(), port, mock,
-        tokens = ['-p','mock']
+    var argv = getAllArgv(), port, mock, flow, 
+        tokens = ['-p','mock','flow']
             
     // console.log(argv)
     tokens.forEach((key)=>{
@@ -133,9 +151,10 @@ function getArgv() {
         if(~index){
             '-p' == key && (port = argv[index+1])
             'mock'  == key && (mock = true)
+            'flow'  == key && (flow = true)
         }
     })
     
     // console.log({port,mock})
-    return {port, mock}
+    return {port, mock, flow}
 }
