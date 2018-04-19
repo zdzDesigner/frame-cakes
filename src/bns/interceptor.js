@@ -20,7 +20,7 @@ export default function authUpdate(aop){
         // }
 
         // 该账号未初始化
-        if(response.data.code == '103122'){
+        if(response.data.code == '103122' || response.data.errId == '103122'){
             location.href = `http://${location.host}/console/home/developer.html#/pc/choose`
             return
         }
