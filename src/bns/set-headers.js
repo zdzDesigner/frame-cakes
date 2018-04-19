@@ -28,7 +28,7 @@ function setToken (){
 function setRmemAuth(){
     let rmemAuth = local.$cookie.get('RMEMAUTH')
     let headers = getHeaders()
-    headers.set('Rmem-auth', rmemAuth)
+    rmemAuth && headers.set('Rmem-auth', rmemAuth)
 }
 
 // 设置headers
