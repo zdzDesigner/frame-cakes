@@ -4,7 +4,7 @@ import logout from './logout.js'
 import { setToken } from './set-headers.js'
 
 
-const logoutCodeList = ['103108','103144','103100','103602','103601']
+const logoutCodeList = ['103108','103144','103100','103602','103601','103151','103144']
 
 export default function authUpdate(aop){
 
