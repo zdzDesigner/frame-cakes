@@ -5,7 +5,7 @@ import { setToken } from './set-headers.js'
 import jumpErrorPage from './jumpErrorPage.js'
 
 
-const logoutCodeList = ['103108','103144','103100','103602','103601']
+const logoutCodeList = ['103108','103100','103602','103601']
 const jumpErrorPageList = ['103147','103144']
 export default function authUpdate(aop){
 
