@@ -7,10 +7,6 @@ const axios = Axios.create()
 
 const CancelToken = Axios.CancelToken
 
-const requestGet = ()=>{}
-const requestPost = ()=>{}
-
-
 // const abort = Axios.CancelToken.source()
 // axios.abort = abort
 // console.log('CancelToken',abort.token)
@@ -35,16 +31,15 @@ function convert(sub){
         // console.log(key,rawUrl)
         
         !item.payload && (item.payload = true)
-        !item.abort  && (item.abort = false)
+        
         
         let type = item.payload ? 'json' : 'form'
-        let abort = item.abort
+        let abort = item.abort || false
         let binary = item.binary || false
         let response = item.response || false
         let compile = typeof item.compile == 'boolean' ? item.compile : true;
         // console.log(item)
-        // let XHR = response ? axios : axiosData
-        let XHR = axios
+        
         let contentType = {
                 'json':'application/json',
                 'form':'application/x-www-form-urlencoded'
@@ -77,19 +72,15 @@ function convert(sub){
             if(~headRequest.indexOf(method)){
                 config = data
                 data = null
-                config = expandHeaders(config, contentType, key, ROOT, abort)
-                pend = binary
-                    ? requestGet(url)
-                    : XHR[method](url,config)
+                config = expandHeaders(config, contentType, key, ROOT, abort, binary)
+                pend = axios[method](url,config)
             }
 
             if(~bodyRequest.indexOf(method)){
-                config = expandHeaders(config, contentType, key, ROOT, abort)
+                config = expandHeaders(config, contentType, key, ROOT, abort, binary)
                 // console.log(data,type)
                 type == 'form' && (data = serialize(data))
-                pend = binary
-                    ? requestPost(url,data)
-                    : XHR[method](url,data,config)
+                pend = axios[method](url,data,config)
             }
 
             // return pend
@@ -114,7 +105,7 @@ function convert(sub){
     },{})
 }
 
-function expandHeaders(config, contentType, apiname, baseURL, abort){
+function expandHeaders(config, contentType, apiname, baseURL, abort, binary){
     
     config = config || {}
     config.headers = config.headers||{}
@@ -127,7 +118,8 @@ function expandHeaders(config, contentType, apiname, baseURL, abort){
                 }))
 
     config.$$apiname = apiname
-    baseURL && (config.baseURL=baseURL)
+    baseURL && (config.baseURL= baseURL)
+    binary && (config.responseType = 'arraybuffer')
     // console.log(config)
     return config
 }
