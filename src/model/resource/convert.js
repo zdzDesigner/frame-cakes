@@ -37,7 +37,10 @@ function convert(sub){
         let abort = item.abort || false
         let binary = item.binary || false
         let response = item.response || false
-        let compile = typeof item.compile == 'boolean' ? item.compile : true;
+        let compile = typeof item.compile == 'boolean' 
+                            ? item.compile 
+                            : true
+        let mock = item.mock || false
         // console.log(item)
         
         let contentType = {
@@ -72,12 +75,12 @@ function convert(sub){
             if(~headRequest.indexOf(method)){
                 config = data
                 data = null
-                config = expandHeaders(config, contentType, key, ROOT, abort, binary)
+                config = expandHeaders(config, contentType, key, ROOT, abort, binary, mock)
                 pend = axios[method](url,config)
             }
 
             if(~bodyRequest.indexOf(method)){
-                config = expandHeaders(config, contentType, key, ROOT, abort, binary)
+                config = expandHeaders(config, contentType, key, ROOT, abort, binary, mock)
                 // console.log(data,type)
                 type == 'form' && (data = serialize(data))
                 pend = axios[method](url,data,config)
@@ -105,7 +108,7 @@ function convert(sub){
     },{})
 }
 
-function expandHeaders(config, contentType, apiname, baseURL, abort, binary){
+function expandHeaders(config, contentType, apiname, baseURL, abort, binary, mock){
     
     config = config || {}
     config.headers = config.headers||{}
@@ -120,6 +123,7 @@ function expandHeaders(config, contentType, apiname, baseURL, abort, binary){
     config.$$apiname = apiname
     baseURL && (config.baseURL= baseURL)
     binary && (config.responseType = 'arraybuffer')
+    mock && (config.headers['mock-remote'] = mock)
     // console.log(config)
     return config
 }

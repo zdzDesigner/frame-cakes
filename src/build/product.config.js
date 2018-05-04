@@ -8,6 +8,15 @@ function exec(conf, webpackExtend){
     
 
     var webpackConfig = merge.smart(config, {
+        module: {
+            rules: [
+            {
+                test: /\.js$/,
+                loader: 'filter-mock-loader',
+                exclude: /node_modules/
+                
+            }]
+        },
         plugins: [
             new webpack.optimize.DedupePlugin(),
             new webpack.DefinePlugin({
