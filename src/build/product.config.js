@@ -1,5 +1,6 @@
 var webpack = require('webpack')
 var merge = require('webpack-merge')
+var mock = require('filter-mock-loader')
 var config = require(process.cwd()+'/webpack.config.js')
 
 module.exports = exec
