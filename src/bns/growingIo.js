@@ -11,8 +11,10 @@ function growingIo () {
       vds.type='text/javascript';
       vds.async = true;
       vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + libraryFile;
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(vds, s);
+      // var s = document.getElementsByTagName('script')[0];
+      // s.parentNode.insertBefore(vds, s);
+      var s = document.getElementsByTagName('head')[0];
+      s.appendChild(vds)
     })();
     function getKey () {
       var baseUrl = window.location.origin || window.location.host
