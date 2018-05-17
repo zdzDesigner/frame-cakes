@@ -92,6 +92,7 @@ function exec(conf, webpackExtend){
         if (!toshell) {
             shell.cd('dist')
             shell.exec('proxy-mock -p ' + port, {
+                maxBuffer:200000 * 1024,
                 async: true
             }).stdout.on('data', function(data) {
                 if (!toshell) {

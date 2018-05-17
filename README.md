@@ -29,6 +29,16 @@ region_post:{
 }
 ```
 
+> withCredentials 跨域携带凭证 
+
+withCredentials:Boolean , default:false
+
+```js 
+region_post:{
+    post:'./region/update?id={id}',
+    payload:false
+}
+```
 
 > abort 中断请求
 
@@ -94,3 +104,6 @@ export default {
 auth.init()    
 auth.update()
 auth.destroy()
+
+
+
