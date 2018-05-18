@@ -13,13 +13,12 @@ function authInit(){
     setRmemAuth()
 }
 
-
 function setToken (){
     let token = local.$cookie.get('TOKEN')
     let headers = getHeaders()
 
-    if(token && token != headers.get('Authentication')){
-        headers.set('Authentication', token)
+    if(token && token != headers.get('Authorization')){
+        headers.set('Authorization', token)
     }    
 
 }
