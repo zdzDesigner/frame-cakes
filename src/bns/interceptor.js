@@ -5,7 +5,7 @@ import { setToken } from './set-headers.js'
 import jumpErrorPage from './jumpErrorPage.js'
 
 
-const logoutCodeList = ['103108','103100','103602','103601']
+const logoutCodeList = ['103108','103100','103602','103601','4011']
 const jumpErrorPageList = ['103144']
 export default function authUpdate(aop){
 
@@ -13,6 +13,9 @@ export default function authUpdate(aop){
         setToken()
         // console.log(response.data)
         if( ~logoutCodeList.indexOf(response.data.code+'')){
+            response.data.code == '4011'
+                && console.log('4011:',response.request.responseURL)
+                
             logout()
         }
         
@@ -21,8 +24,7 @@ export default function authUpdate(aop){
         }
 
         // 该账号未初始化
-        if(response.data.code == '4011'){
-            console.log('4011:',response.request.responseURL)
+        if(response.data.code == '103119'){
             location.href = `http://${location.host}/console/home/developer.html#/pc/choose`
             return
         }
