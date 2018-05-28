@@ -3,7 +3,7 @@ function getRedirectUrl () {
     let redirectUrl = '';
   
     if (baseUrl.indexOf('dui.ai') > -1) {
-        let mainUrl = baseUrl === 'www.dui.ai' ?  'dui.ai' : baseUrl;
+        let mainUrl = baseUrl.replace(/^(www.|www.data.|data.)/, '')
         
         redirectUrl = `http://authentication.${mainUrl}/?service=${encodeURIComponent(location.href)}#/pc/login/commons`
     } 
