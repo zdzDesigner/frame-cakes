@@ -4,7 +4,7 @@ import redirect from './redirect.js'
 
 export default function(){
 	let host = util.parseURL(location.href).host;
-	host = host.replace(/^www\./,'')
+	host = host.replace(/^(www.|www.data.|data.)/, '')
 
     local.$cookie.clear('TOKEN')
     local.$cookie.clear('TOKEN',{ domain : '.'+  host})
