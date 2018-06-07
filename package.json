@@ -1,6 +1,6 @@
 {
   "name": "aife-vue-base",
-  "version": "0.3.9",
+  "version": "0.3.10",
   "main": "lib",
   "description": "aife base util",
   "files": [

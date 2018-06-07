@@ -105,12 +105,21 @@ auth.init()
 auth.update()
 auth.destroy()
 
+## bns 业务
+**登出跳转匹配域和cookie清除域判断**
+> tg 2018.05.30
+
 
 ## 构建
 ### 构建封装
 
-### 添加 babel-include-loader
-### proxy-mock 启动调整 exec => spawn
+**添加 babel-include-loader**
+> zdzDesigner 2018.06.06 
+> https://www.npmjs.com/package/babel-include-loader
+
+**proxy-mock 启动调整 exec => spawn**
+> zdzDesigner 2018.06.07 
+> 解决服务自动挂断问题
 
 
 
