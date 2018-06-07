@@ -27,19 +27,6 @@ function exec(conf, webpackExtend){
         watchOptions:{
             poll:true
         },
-        module: {
-            rules: [{
-                test: /\.vue$/,
-                loader: 'vue-loader',
-                options: {
-                    extractCSS: true,
-                    preLoaders:{
-                        js:'vue-flow-loader'
-                    }
-                }
-
-            }]
-        },
         // devtool: 'cheap-module-eval-source-map',
         plugins: [
             new webpack.DefinePlugin({
@@ -53,20 +40,20 @@ function exec(conf, webpackExtend){
 
     if(webpackExtend) webpackConfig = merge.smart(webpackConfig,webpackExtend)
 
-    if(!isflow){
-        webpackConfig.module.rules.forEach(function(item){
-            if(item.loader == 'vue-loader'){
-                var loaders = [].concat(item.options.preLoaders.js)
-                console.log(loaders)
-                
-                loaders = loaders.filter((loader) => 'vue-flow-loader' != loader )
-                if(!loaders.length){
-                    delete item.options.preLoaders.js    
-                }
-                
+    if (isflow) {
+        webpackConfig.module.rules.forEach(function (item) {
+            if( item.loader == 'vue-loader'
+                && item.options
+                && item.options.preLoaders
+                && item.options.preLoaders.js){
+                let loaders = item.options.preLoaders.js.split('!')
+                item.options.preLoaders.js
+                    = ['vue-flow-loader'].concat(loaders).join('!')
             }
-        })
+        });
     }
+    // console.log(webpackConfig.module)
+    // console.log(webpackConfig.module.rules[0])
 
     webpack(webpackConfig, function(err, status) {
         if (err) throw err
