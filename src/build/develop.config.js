@@ -4,6 +4,7 @@ var opn = require('opn')
 var colors = require('colors')
 var NyanProgressPlugin = require('nyan-progress-webpack-plugin')
 var spawn = require('child_process').spawn
+var ProxySpawn = require('child_process').spawn;
 var shell = require('shelljs')
 var babel = require('babel-core')
 var flow = require('flow-bin')
@@ -76,21 +77,18 @@ function exec(conf, webpackExtend){
             chunkModules: false
 
         }) + '\n')
+        
         if (!toshell) {
-            shell.cd('dist')
-            shell.exec('proxy-mock -p ' + port, {
-                maxBuffer:Math.pow(10,6) * 1024,
-                async: true
-            }).stdout.on('data', function(data) {
-                if (!toshell) {
-                    var serverPath = 'http://localhost:' + port+publicPath
-                    // opn(serverPath)
-                    console.log('服务地址：',serverPath)
-                }
-                toshell = true
-            })
-
-
+            shell.cd('dist');
+            ProxySpawn('proxy-mock', 
+                        ['-p', port],
+                        {
+                            stdio: 'inherit',
+                            shell:process.platform == 'win32'
+                        }).on('exit', process.exit)
+            
+            console.log('服务地址：', 'http://localhost:' + port + publicPath);
+            toshell = true;
         }
 
     })
