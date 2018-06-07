@@ -94,7 +94,7 @@ export default {
 
 ### local 封装
 
-### 构建封装
+
 
 
 ### 鉴权封装
@@ -104,6 +104,13 @@ export default {
 auth.init()    
 auth.update()
 auth.destroy()
+
+
+## 构建
+### 构建封装
+
+### 添加 babel-include-loader
+### proxy-mock 启动调整 exec => spawn
 
 
 
