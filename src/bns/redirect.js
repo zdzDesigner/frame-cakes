@@ -1,4 +1,4 @@
-function getRedirectUrl () {
+function getRedirectUrl (notRememberUrl) {
   const baseUrl =  window.location.host;
   let redirectUrl = '';
 
@@ -10,7 +10,12 @@ function getRedirectUrl () {
     } else {
       mainUrl = _rgls[0]
     }
-    redirectUrl = `http://authentication.${mainUrl}/?service=${encodeURIComponent(location.href)}#/pc/login/commons`
+    if(notRememberUrl){
+      redirectUrl =  `http://authentication.${mainUrl}/#/pc/login/commons`
+    }else{
+      redirectUrl = `http://authentication.${mainUrl}/?service=${encodeURIComponent(location.href)}#/pc/login/commons`
+    }
+    
   } 
   return redirectUrl
 }

@@ -2,7 +2,7 @@ import local from '../model/local'
 import util from '../util'
 import redirect from './redirect.js'
 
-export default function(){
+export default function(notRememberUrl){
   let host = util.parseURL(location.href).host;
   let _rgls = /(review\.dui\.ai)|(dev\.dui\.ai)|(t\.dui\.ai)|(stable\.dui\.ai)|(beta\.dui\.ai)|(dui\.ai)/g.exec(host)
   if (!_rgls) {
@@ -13,7 +13,7 @@ export default function(){
     local.$cookie.clear('TOKEN',{ domain : '.'+  host})
     local.$cookie.clear('groupKey')
     local.$cookie.clear('groupKey',{ domain : '.'+ host })
-    location.href = redirect.getRedirectUrl()    
+    location.href = redirect.getRedirectUrl(notRememberUrl)    
   }
 }
 
