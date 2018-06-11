@@ -106,24 +106,24 @@ auth.update()
 auth.destroy()
 
 ## bns 业务
-**登出跳转匹配域和cookie清除域判断**
+**0.3.09** 登出跳转匹配域和cookie清除域判断
 > tg 2018.05.30
 
-**登出时如果传入参数true将不再记住当前地址**
+**0.3.12** 登出时如果传入参数true将不再记住当前地址
 > tsz 2018.06.11 
 
 ## 构建
 ### 构建封装
 
-**添加 babel-include-loader**
+**0.3.10** 添加 babel-include-loader
 > zdzDesigner 2018.06.06 
 > https://www.npmjs.com/package/babel-include-loader
 
-**proxy-mock 启动调整 exec => spawn**
+**0.3.10** proxy-mock 启动调整 exec => spawn
 > zdzDesigner 2018.06.07 
 > 解决服务自动挂断问题
 
-**babel-loader 添加exclude,释放 .babelrc ignore配置**
+**0.3.11** babel-loader 添加exclude,释放 .babelrc ignore配置
 > zdzDesigner 2018.06.11 
 > build/base.config.js 
 
