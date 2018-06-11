@@ -121,5 +121,11 @@ auth.destroy()
 > zdzDesigner 2018.06.07 
 > 解决服务自动挂断问题
 
+**babel-loader 添加exclude,释放 .babelrc ignore配置**
+> zdzDesigner 2018.06.11 
+> build/base.config.js 
+
+vue-loader 中对 node_modules 中的源文件开启babel编译
+
 
 
