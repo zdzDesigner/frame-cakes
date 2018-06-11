@@ -127,7 +127,7 @@ auth.destroy()
 > zdzDesigner 2018.06.11 
 > build/base.config.js 
 
-vue-loader 中对 node_modules 中的源文件开启babel编译
+暂时删除：vue-loader 中对 node_modules 中的源文件开启babel编译
 
 
 
