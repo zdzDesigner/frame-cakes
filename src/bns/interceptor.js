@@ -11,24 +11,19 @@ export default function authUpdate(aop){
 
     return function (response) {
         setToken()
+        let code = String(response.data.code)
+
         // console.log(response.data)
-        if( ~logoutCodeList.indexOf(response.data.code+'')){
-            if(response.data.code == '4011'){
-                console.log('4011:',response.request.responseURL)
-                setTimeout(function(){
-                    logout()    
-                },3000)
-            }else{
-                logout()    
-            }
+        if( ~logoutCodeList.indexOf(code)){
+            logout()    
         }
         
-        if( ~jumpErrorPageList.indexOf(response.data.code+'')){
+        if( ~jumpErrorPageList.indexOf(code)){
             jumpErrorPage()
         }
 
         // 该账号未初始化
-        if(response.data.code == '103119'){
+        if('103119' == code){
             location.href = `http://${location.host}/console/home/developer.html#/pc/choose`
             return
         }
