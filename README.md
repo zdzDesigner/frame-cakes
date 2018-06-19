@@ -129,5 +129,8 @@ auth.destroy()
 
 暂时删除：vue-loader 中对 node_modules 中的源文件开启babel编译
 
+**0.3.14** 去除code为4011时的3秒延迟
+
+
 
 
