@@ -24,7 +24,7 @@ export default function authUpdate(aop){
 
         // 该账号未初始化
         if('103119' == code){
-            location.href = `http://${location.host}/console/home/developer.html#/pc/choose`
+            location.href = `http://${location.host}/console/home/developer.html?service=${encodeURIComponent(location.href)}#/pc/choose`
             return
         }
         util.isFunction(aop) && aop(response)
