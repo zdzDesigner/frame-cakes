@@ -17,7 +17,7 @@ function setToken (){
     let token = local.$cookie.get('TOKEN')
     let headers = getHeaders()
 
-    if(token && token != headers.get('Authorization')){
+    if(token != headers.get('Authorization')){
         headers.set('Authorization', token)
     }    
 

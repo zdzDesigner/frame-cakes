@@ -17,11 +17,13 @@ module.exports = exec
 function exec(conf, webpackExtend){
     var publicPath = _package.publicPath
     var defaultPort = conf.port 
+    var domain = (conf.proxy && conf.proxy.domain) || false
     var env = getArgv()
     var port = env.port || defaultPort || 8088
     var mock = env.mock || false
     var isflow = env.flow || false
     var toshell = false
+    var proxy = null
 
     var webpackConfig = merge.smart(config, {
         watch: true,
@@ -77,17 +79,14 @@ function exec(conf, webpackExtend){
             chunkModules: false
 
         }) + '\n')
+
+        process.on('exit', function(){
+            console.log('--- exit ---')
+            proxy.kill()
+        })
         
         if (!toshell) {
-            shell.cd('dist');
-            ProxySpawn('proxy-mock', 
-                        ['-p', port],
-                        {
-                            stdio: 'inherit',
-                            shell:process.platform == 'win32'
-                        }).on('exit', process.exit)
-            
-            console.log('服务地址：', 'http://localhost:' + port + publicPath);
+            proxy = proxyMock(port, domain)
             toshell = true;
         }
 
@@ -143,4 +142,36 @@ function getArgv() {
     
     // console.log({port,mock})
     return {port, mock, flow}
+}
+
+
+/**
+ * [proxyMock 执行proxy-mock]
+ * @param  {[type]} domain [代理域名配置]
+ * @return {[type]}        [proxy-mock child process]
+ */
+function proxyMock(port, domain){
+    var publicPath = _package.publicPath;
+    var proxySpawnArg = ['-p', port]
+    if(domain){
+        proxySpawnArg = proxySpawnArg.concat(['-d',serializeDomain(domain).replace(/\*/g,'@')])
+    }
+    shell.cd('dist');
+    console.log('服务地址：', 'http://localhost:' + port + publicPath);
+    return ProxySpawn('proxy-mock', proxySpawnArg, {
+        stdio: 'inherit',
+        shell: process.platform == 'win32'
+    }).on('exit', process.exit);
+}
+
+/**
+ * [serializeDomain 序列化代理domain]
+ * @param  {[type Object]} domains [{'/console':'http://dev.dui.ai'}]
+ * @return {[type String]}         ['/console=http://dev.dui.ai']
+ */
+function serializeDomain(domains){
+    return Object.keys(domains).map(function(key){
+        var merge = `${key}=${domains[key]}`
+        return merge
+    }).join('&')
 }
