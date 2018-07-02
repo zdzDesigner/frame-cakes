@@ -18,6 +18,7 @@ function exec(conf, webpackExtend){
     var publicPath = _package.publicPath
     var defaultPort = conf.port 
     var domain = (conf.proxy && conf.proxy.domain) || false
+    var recookie = conf.proxy && conf.proxy.recookie || false
     var env = getArgv()
     var port = env.port || defaultPort || 8088
     var mock = env.mock || false
@@ -86,8 +87,8 @@ function exec(conf, webpackExtend){
         })
         
         if (!toshell) {
-            proxy = proxyMock(port, domain)
-            toshell = true;
+            proxy = proxyMock(port, domain, recookie)
+            toshell = true
         }
 
     })
@@ -148,13 +149,17 @@ function getArgv() {
 /**
  * [proxyMock 执行proxy-mock]
  * @param  {[type]} domain [代理域名配置]
+ * @param  {[type]} recookie [需要转接的cookie]
  * @return {[type]}        [proxy-mock child process]
  */
-function proxyMock(port, domain){
+function proxyMock(port, domain, recookie){
     var publicPath = _package.publicPath;
     var proxySpawnArg = ['-p', port]
     if(domain){
         proxySpawnArg = proxySpawnArg.concat(['-d',serializeDomain(domain).replace(/\*/g,'@')])
+    }
+    if (recookie) {
+        proxySpawnArg = proxySpawnArg.concat(['-c', serializeDomain(recookie)]);
     }
     shell.cd('dist');
     console.log('服务地址：', 'http://localhost:' + port + publicPath);
