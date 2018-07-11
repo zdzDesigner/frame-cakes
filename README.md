@@ -131,6 +131,14 @@ auth.destroy()
 
 **0.3.14** 去除code为4011时的3秒延迟
 
+**0.4.0** 构建中添加 proxy-mock 配置，可配置多域名
+> zdzDesigner 2018.07.01
+> build/develop.config.js 
+
+**0.4.2** fixbug api配置中 'log.php' => 'log.php/undefined' 问题
+> zdzDesigner 2018.07.11 
+> util/parse/parseURL
+
 
 
 
