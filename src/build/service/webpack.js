@@ -1,3 +1,4 @@
+const MemoryFS = require("memory-fs")
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const opn = require('opn')
@@ -13,6 +14,7 @@ module.exports = webpackServer
 
 function webpackServer(webpackBase, webpackExtend, conf){
     // console.log({conf})
+    const memoryFS = new MemoryFS()
     let {mock, port, isflow} = conf
     let webpackConfig = merge.smart(webpackBase, {
         watch: true,
@@ -25,7 +27,7 @@ function webpackServer(webpackBase, webpackExtend, conf){
                 'APP_MOCK': JSON.stringify(mock),
                 'APP_PORT': JSON.stringify(port)
             }),
-            new NyanProgressPlugin()
+            // new NyanProgressPlugin()
 
         ]
     })
@@ -48,6 +50,7 @@ function webpackServer(webpackBase, webpackExtend, conf){
     // console.log(webpackConfig.module.rules[0])
 
     let webpackCompiler = webpack(webpackConfig)
+    webpackCompiler.outputFileSystem = memoryFS
     // console.log({webpackCompiler})
     return webpackCompiler
 }
