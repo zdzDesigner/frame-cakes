@@ -25,7 +25,7 @@ function webpackServer(webpackBase, webpackExtend, conf){
                 'APP_MOCK': JSON.stringify(mock),
                 'APP_PORT': JSON.stringify(port)
             }),
-            // new NyanProgressPlugin()
+            new NyanProgressPlugin()
 
         ]
     })
