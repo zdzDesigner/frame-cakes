@@ -135,9 +135,13 @@ auth.destroy()
 > zdzDesigner 2018.07.01
 > build/develop.config.js 
 
-**0.4.2** fixbug api配置中 'log.php' => 'log.php/undefined' 问题
+**0.4.3** fixbug api配置中 'log.php' => 'log.php/undefined' 问题
 > zdzDesigner 2018.07.11 
 > util/parse/parseURL
+
+**0.5.0-alpha.0** webpack develop 拆分子进程
+> zdzDesigner 2018.07.13
+> build/develop.config.js 
 
 
 
