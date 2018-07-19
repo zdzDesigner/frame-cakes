@@ -1,6 +1,7 @@
 var webpack = require('webpack')
 var merge = require('webpack-merge')
 var mock = require('filter-mock-loader')
+var UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 var config = require(process.cwd()+'/webpack.config.js')
 
 module.exports = exec
@@ -19,15 +20,14 @@ function exec(conf, webpackExtend){
             }]
         },
         plugins: [
-            new webpack.optimize.DedupePlugin(),
             new webpack.DefinePlugin({
                 'APP_MOCK': JSON.stringify(false)
             }),
-            new webpack.optimize.UglifyJsPlugin({
-                  compress: {
+            new UglifyJSPlugin({ uglifyOptions:{
+                compress: {
                     warnings: false
-                  }
-                })
+                }
+            }})
         ]    
     })
 

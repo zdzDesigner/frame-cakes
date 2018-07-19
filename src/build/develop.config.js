@@ -34,7 +34,7 @@ function exec(config, webpackExtend){
     let webpackCompiler = webpackServer(webpackBase, webpackExtend, conf)
     let watching = webpackCompiler.watch({
           // watchOptions 示例
-          ignored: /node_modules/,
+          // ignored: /node_modules/,
           aggregateTimeout: 300,
           poll: undefined
         },(err, status) => {
@@ -47,13 +47,11 @@ function exec(config, webpackExtend){
                 chunks: false,
                 chunkModules: false
             }) + '\n')
+        
             if(isflow){
                 flowProcess = flowServer()
-                // flowProcess.on('exit',function(code, sig){
-                //     console.log('flow process exit:',{code, sig})
-                //     proxyProcess.kill()
-                // })
             }
+
             if (!proxyProcess) {
                 proxyProcess = proxyMockServer(port, domain, recookie, publicPath)
                 proxyProcess.on('exit', function(code, sig){
@@ -64,8 +62,8 @@ function exec(config, webpackExtend){
 
             process.on('exit', function(code, sig){
                 console.log('main process exit: ',{code, sig})
-                // proxyProcess.kill()
-                // flowProcess.kill()
+                proxyProcess && proxyProcess.kill()
+                flowProcess && flowProcess.kill()
             })
             
         

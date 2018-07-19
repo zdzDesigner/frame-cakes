@@ -29,6 +29,7 @@
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.5",
     "store2": "^2.7.0",
+    "uglifyjs-webpack-plugin": "^1.2.7",
     "vue": "^2.5.16"
   }
 }
