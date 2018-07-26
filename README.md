@@ -139,6 +139,8 @@ auth.destroy()
 > zdzDesigner 2018.07.11 
 > util/parse/parseURL
 
+**0.4.4** 移除header头中的 TOKEN
+
 
 
 
