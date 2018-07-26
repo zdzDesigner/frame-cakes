@@ -1,16 +1,13 @@
-import isObject from 'lodash/isObject'
-import isFunction from 'lodash/isFunction'
 import isNumber from 'lodash/isNumber'
 import isString from 'lodash/isString'
 import isBoolean from 'lodash/isBoolean'
 import isNil from 'lodash/isNil'
 
-console.log({isNil})
 
-function isType(type, obj){
-    return Object.prototype.toString.call(obj) == `[object ${type}]`
-}
 
+const isType = (type, obj) => Object.prototype.toString.call(obj) == `[object ${type}]`
+const isObject = (val)=> isType('Object', val)
+const isFunction = (val)=> isType('Function', val)
 
 
 /**
@@ -27,6 +24,7 @@ function CTS(constructor){
         return ~ constructor.toString().indexOf(type)    
     })[0]
 }
+
 /**
  * [hasCnStr 是否存在中文字符串]
  * @param  {[String]} text  [这是一个测试字符串，just a test。]
