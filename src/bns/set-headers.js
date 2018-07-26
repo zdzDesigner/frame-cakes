@@ -9,11 +9,12 @@ export {
 }
 
 function authInit(){
-    setToken()
-    setRmemAuth()
+    // setToken()
+    // setRmemAuth()
 }
 
 function setToken (){
+    return
     let token = local.$cookie.get('TOKEN')
     let headers = getHeaders()
 
@@ -25,7 +26,8 @@ function setToken (){
 
 // 记住我
 function setRmemAuth(){
-    let rmemAuth = local.$cookie.get('RMEMAUTH')
+    return
+    let rmemAuth = local.$cookie.get('Rmem-auth')
     let headers = getHeaders()
     rmemAuth && headers.set('Rmem-auth', rmemAuth)
 }

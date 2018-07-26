@@ -10,7 +10,7 @@ const jumpErrorPageList = ['103144']
 export default function authUpdate(aop){
 
     return function (response) {
-        setToken()
+        // setToken()
         let code = String(response.data.code)
 
         // console.log(response.data)
