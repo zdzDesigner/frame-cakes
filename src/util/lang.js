@@ -1,3 +1,32 @@
+import isObject from 'lodash/isObject'
+import isFunction from 'lodash/isFunction'
+import isNumber from 'lodash/isNumber'
+import isString from 'lodash/isString'
+import isBoolean from 'lodash/isBoolean'
+import isNil from 'lodash/isNil'
+
+console.log({isNil})
+
+function isType(type, obj){
+    return Object.prototype.toString.call(obj) == `[object ${type}]`
+}
+
+
+
+/**
+ * [CTS 获取类型字符]
+ * @param {[type]} constructor [Class]
+ * String => 'String'
+ * Number => 'Number'
+ * ...Class => 'Class'
+ */
+function CTS(constructor){
+    constructor = constructor || ''
+    return ['Number', 'String', 'Boolean', 
+            'Object', 'Array'].filter((type)=>{
+        return ~ constructor.toString().indexOf(type)    
+    })[0]
+}
 /**
  * [hasCnStr 是否存在中文字符串]
  * @param  {[String]} text  [这是一个测试字符串，just a test。]
@@ -22,7 +51,14 @@ function textTruncate (text, maxlen){
   }
 }
 
+
+
 export default  {
   hasCnStr,
-  textTruncate
+  textTruncate,
+  isType,
+  isObject,
+  isFunction,
+  isNil,
+  CTS
 }
