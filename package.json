@@ -21,7 +21,8 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.0",
     "gulp-concat": "^2.6.1",
-    "through2": "^2.0.3"
+    "through2": "^2.0.3",
+    "webpack-plugin-hash": "^1.0.3"
   },
   "dependencies": {
     "axios": "^0.18.0",

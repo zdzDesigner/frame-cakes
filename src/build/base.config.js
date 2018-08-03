@@ -10,6 +10,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
+var WebpackPluginHash = require('webpack-plugin-hash')
 
 
 module.exports = getConfig
@@ -95,9 +96,15 @@ function getConfig(conf, webpackExtend) {
             }]),
             new InlineManifestWebpackPlugin(),
             new ExtractTextPlugin('style/app_[chunkhash:8].css'),
+            new WebpackPluginHash({
+              callback: (err, hash) => {
+                
+              }
+            }),
             new HtmlWebpackPlugin({
                 title:title,
                 template:'index.ejs',
+                cdn: 'https://cdn.dui.ai',
                 env:ENV ? '':'http://172.16.20.47',
                 chunks: ['app'],
                 inject:false,
