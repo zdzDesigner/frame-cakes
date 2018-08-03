@@ -140,6 +140,7 @@ auth.destroy()
 > util/parse/parseURL
 
 **0.4.4** 移除header头中的 TOKEN
+**0.4.5** fix windows proxy-mock -d aa=bb&cc=dd (&)关键字问题
 
 
 

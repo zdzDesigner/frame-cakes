@@ -178,5 +178,5 @@ function serializeDomain(domains){
     return Object.keys(domains).map(function(key){
         var merge = `${key}=${domains[key]}`
         return merge
-    }).join('&')
+    }).join('@@')
 }
