@@ -1,6 +1,4 @@
-import lang from './lang.js'
-
-const { isObject } = lang
+import { isObject } from './lang.js'
 
 export default function (data,callback){
     function loop(data, keys, key){

@@ -5,7 +5,7 @@
  * @param  {[Array]} arr2 []
  * @return {[Array]}      []
  */
-export default function(arr1,arr2) {
+function intersection(arr1,arr2) {
 
     if(!Array.isArray(arr1)||!Array.isArray(arr2)){
         console.warn(`intersection方法的两个参数必须为数组！`)
@@ -29,4 +29,8 @@ export default function(arr1,arr2) {
     }
 
     return arr;
+}
+
+export {
+    intersection
 }

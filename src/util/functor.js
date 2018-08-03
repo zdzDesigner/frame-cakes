@@ -146,7 +146,7 @@ var last = arr => arr[arr.length - 1]
 var last2 = arr => {console.log(arr)}
 
 
-var url = window.location.href
+// var url = window.location.href
 // var parms = compose( split('&'), first ,split('#'), last, split('?') )
 // console.log(compose( map( compose((key)=>{console.log(key[0])return key} , split('=')) ), parms)(url))
 // console.log(compose( last,first, filter(compose( eq('age') , first)), map(  split('=') ), parms)(url))

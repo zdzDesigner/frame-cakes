@@ -1,6 +1,6 @@
-import lang from './lang.js'
+import { isObject } from './lang.js'
 
-const { isObject } = lang
+
 /**
  * [deep json递归器]
  * @param  {[type]}   val [description]
