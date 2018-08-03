@@ -11,6 +11,9 @@
   },
   "author": "zdzDesigner",
   "license": "ISC",
+  "peerDependencies":{
+    "proxy-mock":"^1.2.3"
+  },
   "devDependencies": {
     "babel-core": "^6.0.0",
     "babel-plugin-transform-flow-strip-types": "^6.0.0",
