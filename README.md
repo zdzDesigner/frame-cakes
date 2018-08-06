@@ -91,10 +91,13 @@ export default {
 
 
 ### schema 配置
+
 > 目的：为了解决服务端返回数据不可信问题
+
 > 在服务端返回的JSON对象数据组成有
 >>  引用类型：Object=> {}、Array=> []
 >>  基本类型：String、Number、Boolean
+
 > 规则：添加验证规则的字段开启验证，未添加的忽略验证
 >>  如下接口，在文档中有company字段，但验证规则中未添加company字段，则忽略验证
 
