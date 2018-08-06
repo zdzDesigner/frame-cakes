@@ -100,7 +100,8 @@ export default {
 >>  1. 抛错：抛出 warn 警告
 
 >>  2. 重写：定义的类型重写到返回字段中
-![avatar](https://gitlab.spetechcular.com/aife/aife-vue-base/tree/release/0.5.0-alpha.5/assets/readme/schema_warn.png)
+
+![avatar](/assets/readme/schema_warn.png)
 
 > 服务端返回的JSON对象 数据类型如下：
 >>  引用类型：Object=> {}、Array=> []
