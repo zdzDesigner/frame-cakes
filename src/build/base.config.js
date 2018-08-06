@@ -106,6 +106,7 @@ function getConfig(conf, webpackExtend) {
                 template:'index.ejs',
                 cdn: 'https://cdn.dui.ai',
                 env:ENV ? '':'http://172.16.20.47',
+                cdn: 'https://cdn.dui.ai',
                 chunks: ['app'],
                 inject:false,
                 minify: {
