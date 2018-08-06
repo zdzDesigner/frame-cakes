@@ -111,7 +111,7 @@ export default {
 >>  基本类型：String、Number、Boolean
 
 > *规则：添加验证规则的字段开启验证，未添加的忽略验证*
->>  如下接口，在文档中有company字段，但验证规则中未添加company字段，则忽略company验证
+>>  *如下接口，在文档中有company字段，但验证规则中未添加company字段，则忽略company验证*
 
 ```js
 export default {
