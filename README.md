@@ -96,6 +96,7 @@ export default {
 
 > 服务端返回的JSON对象 数据类型如下：
 >>  引用类型：Object=> {}、Array=> []
+
 >>  基本类型：String、Number、Boolean
 
 > 规则：添加验证规则的字段开启验证，未添加的忽略验证
