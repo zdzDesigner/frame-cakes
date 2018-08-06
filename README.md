@@ -90,7 +90,9 @@ export default {
 *user_list2生成 => Request URL:http://www.baidu.com/user/list*
 
 
-### schema 配置
+
+
+### api schema 配置
 
 > 目的：为了解决服务端返回数据不可信问题
 > 业务场景如下
@@ -138,6 +140,7 @@ export default {
     ...
 }
 ```
+
 
 
 
