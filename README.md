@@ -95,7 +95,11 @@ export default {
 ### api schema 配置
 
 > 目的：为了解决服务端返回数据不可信问题, 业务场景如下
->> 需要的字段类型是 plan object=>{},但是服务端返回null,或其他基本类型，获取属性时出现 the_key is not defined 错误，导致页面 block；plan array => [] ,场景和 object 一致
+>> 期望的字段类型是 plan object=>{}, 但是服务端返回null, 或其他基本类型，获取属性时出现 the_key is not defined 错误，导致页面 block；plan array => [], 场景和 object 一致
+
+>> 期望为Number类型 返回String 如：'33', '33' => 33
+
+>> 测试同学可以通过 warn log 定位到 bug 根源，不必通过前端中转
 
 > 处理，根据以上经常出现的问题，做了如下两步主要处理
 >>  1. 抛错：抛出 warn 警告
