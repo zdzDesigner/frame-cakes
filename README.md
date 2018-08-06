@@ -94,8 +94,7 @@ export default {
 
 ### api schema 配置
 
-> 目的：为了解决服务端返回数据不可信问题
-> 业务场景如下
+> 目的：为了解决服务端返回数据不可信问题, 业务场景如下
 >> 需要的字段类型是 plan object=>{},但是服务端返回null,或其他基本类型，获取属性时出现 the_key is not defined 错误，导致页面 block；plan array => [] ,场景和 object 一致
 
 > 处理，根据以上经常出现的问题，做了如下两步主要处理
