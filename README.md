@@ -101,14 +101,16 @@ export default {
 
 >>  2. 重写：定义的类型重写到返回字段中
 
+>>  响应结果如下：
+
 ![avatar](/assets/readme/schema_warn.png)
 
-> 服务端返回的JSON对象 数据类型如下：
+> 类型配置：服务端返回的JSON对象数据类型
 >>  引用类型：Object=> {}、Array=> []
 
 >>  基本类型：String、Number、Boolean
 
-> 规则：添加验证规则的字段开启验证，未添加的忽略验证
+> *规则：添加验证规则的字段开启验证，未添加的忽略验证*
 >>  如下接口，在文档中有company字段，但验证规则中未添加company字段，则忽略company验证
 
 ```js
