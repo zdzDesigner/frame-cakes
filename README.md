@@ -94,7 +94,7 @@ export default {
 
 > 目的：为了解决服务端返回数据不可信问题
 
-> 在服务端返回的JSON对象数据组成有
+> 服务端返回的JSON对象 数据类型如下：
 >>  引用类型：Object=> {}、Array=> []
 >>  基本类型：String、Number、Boolean
 
