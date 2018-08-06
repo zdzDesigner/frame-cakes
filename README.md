@@ -90,6 +90,40 @@ export default {
 *user_list2生成 => Request URL:http://www.baidu.com/user/list*
 
 
+### schema 配置
+> 目的：为了解决服务端返回数据不可信问题
+> 在服务端返回的JSON对象数据组成有
+>>  引用类型：Object=> {}、Array=> []
+>>  基本类型：String、Number、Boolean
+> 规则：添加验证规则的字段开启验证，未添加的忽略验证
+>>  如下接口，在文档中有company字段，但验证规则中未添加company字段，则忽略验证
+
+```js
+export default {
+    ...
+    user_list:{
+        get:'./user/info',
+        // 这里既是schema配置
+        schema:{
+            data:{
+                user:{
+                    name:String
+                },
+                currentPermission:[Number],
+                groupList:[{
+                    companyId:Number,
+                    companyName:String,
+                    companyShortName:String
+                    ...
+                }]
+
+            }
+        }
+    }
+    ...
+}
+```
+
 
 
 ### local 封装
@@ -142,6 +176,18 @@ auth.destroy()
 **0.5.0-alpha.0** webpack develop 拆分子进程
 > zdzDesigner 2018.07.13
 > build/develop.config.js 
+
+**0.5.0-alpha.4** proxy-mock (window system & to @@)
+> zdzDesigner 2018.08.01
+> build/service/proxy-mock.js 
+
+**0.5.0-alpha.5** api schema
+> zdzDesigner 2018.08.03
+> model/resource/schemer.js
+
+
+
+
 
 
 
