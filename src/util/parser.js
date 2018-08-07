@@ -5,7 +5,9 @@ function parseURL(url){
           'port', 'path', 'query', 'hash']
          .reduce((obj, field, index)=>{
             let ret = result[index]
-            if('path'==field) ret = '/'+ret
+            if ('path' == field) {
+              ret = ret ? ('/' + ret):''
+            }
             obj[field] = ret
             return obj
          },{})
