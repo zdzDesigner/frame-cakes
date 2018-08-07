@@ -3,6 +3,7 @@
   "version": "0.4.2",
   "main": "lib",
   "description": "aife base util",
+  "bin": "./bin/deploy.sh",
   "files": [
     "lib"
   ],

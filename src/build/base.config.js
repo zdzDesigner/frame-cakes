@@ -10,28 +10,30 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
-var WebpackPluginHash = require('webpack-plugin-hash')
 
 
 module.exports = getConfig
 
 function getConfig(conf, webpackExtend) {
-
-    var publicPath = conf.publicPath || '/'
-    var version = conf.version || 'v0.1.0'
+    var name = process.env.PRODUCT_NAME || conf.name || ''
+    var version = process.env.PRODUCT_TAG || conf.version || 'v0.1.0'
     var title = conf.title || '前端基础构建'
-    var dirname = conf.dirname || process.cwd()
-    var ENV = process.env.NODE_ENV
-    console.log('dirname:',dirname)
 
+    var CDN_PATH = process.env.CDN_PATH
+    var dirname = process.cwd()
+    var ENV = process.env.NODE_ENV
+
+    var outPath = path.join(dirname, ENV == 'pro' ? `./dist/console/${name}-${version}/` :  `./dist/console/${name}/`)
+    var publicPath = ENV == 'pro' && CDN_PATH ? `${CDN_PATH}/console/${name}-${version}/` : `/console/${name}/`
+    
     var config = {
         entry: {
-            app: dirname + '/src/app/index.js'
+            app: path.join(dirname, './src/app/index.js')
         },
         output: {
-            path:dirname + '/dist'+ publicPath,
-            filename: 'js/[name]_[chunkhash:8].js',
-            chunkFilename: 'js/[name]_[chunkhash:8].js',
+            path: outPath,
+            filename: 'js/[name].js',
+            chunkFilename: 'js/[name].js',
             publicPath: publicPath
         },
 
@@ -54,11 +56,11 @@ function getConfig(conf, webpackExtend) {
                 loader: ExtractTextPlugin.extract('css-loader!sass-loader')
             },{
                 test: /\.(png|jpg)$/,
-                loader: 'url-loader?limit=18192&name=./images/[hash:8].[name].[ext]'
+                loader: 'url-loader?limit=18192&name=./images/[name].[ext]'
             },
             {
                 test: /\.(svg|woff|woff2|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
-                loader:'file-loader?name=./style/fonts/[hash:8].[name].[ext]'
+                loader:'file-loader?name=./style/fonts/[name].[ext]'
             }]
         },
         resolve: {
@@ -95,18 +97,11 @@ function getConfig(conf, webpackExtend) {
                 to: 'images'
             }]),
             new InlineManifestWebpackPlugin(),
-            new ExtractTextPlugin('style/app_[chunkhash:8].css'),
-            new WebpackPluginHash({
-              callback: (err, hash) => {
-                
-              }
-            }),
+            new ExtractTextPlugin('style/app.css'),
             new HtmlWebpackPlugin({
                 title:title,
                 template:'index.ejs',
-                cdn: 'https://cdn.dui.ai',
                 env:ENV ? '':'http://172.16.20.47',
-                cdn: 'https://cdn.dui.ai',
                 chunks: ['app'],
                 inject:false,
                 minify: {
