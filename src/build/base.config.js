@@ -15,20 +15,26 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 module.exports = getConfig
 
 function getConfig(conf, webpackExtend) {
-
-    var publicPath = conf.publicPath || '/'
-    var version = conf.version || 'v0.1.0'
+    var name = process.env.PRODUCT_NAME || conf.name || ''
+    var version = process.env.PRODUCT_TAG || conf.version || 'v0.1.0'
     var title = conf.title || '前端基础构建'
-    var dirname = conf.dirname || process.cwd()
-    var ENV = process.env.NODE_ENV
-    console.log('dirname:',dirname)
 
+    var CDN_PATH = process.env.CDN_PATH
+    var dirname = process.cwd()
+    var ENV = process.env.NODE_ENV
+
+    const isPro = ENV == 'pro'
+
+    var outName = isPro ? `${name}-${version}` : `${name}`
+    var outPath = path.join(dirname, `./dist/console/${outName}/`)
+    var publicPath = isPro && CDN_PATH ? `${CDN_PATH}/console/${outName}/` : `/console/${outName}/`
+    
     var config = {
         entry: {
-            app: dirname + '/src/app/index.js'
+            app: path.join(dirname, './src/app/index.js')
         },
         output: {
-            path:dirname + '/dist'+ publicPath,
+            path: outPath,
             filename: 'js/[name]_[chunkhash:8].js',
             chunkFilename: 'js/[name]_[chunkhash:8].js',
             publicPath: publicPath
@@ -88,7 +94,6 @@ function getConfig(conf, webpackExtend) {
             new webpack.optimize.CommonsChunkPlugin({
                 names: ['manifest'].reverse()
             }),
-
             new CopyWebpackPlugin([{
                 from:'src/app/view/assets/images',
                 to: 'images'
@@ -96,6 +101,7 @@ function getConfig(conf, webpackExtend) {
             new InlineManifestWebpackPlugin(),
             new ExtractTextPlugin('style/app_[chunkhash:8].css'),
             new HtmlWebpackPlugin({
+                CDN_PATH,
                 title:title,
                 template:'index.ejs',
                 env:ENV ? '':'http://172.16.20.47',

@@ -1,3 +1,5 @@
+"use strict"
+
 var webpack = require('webpack')
 var merge = require('webpack-merge')
 var mock = require('filter-mock-loader')
@@ -7,8 +9,6 @@ var config = require(process.cwd()+'/webpack.config.js')
 module.exports = exec
 
 function exec(conf, webpackExtend){
-    
-
     var webpackConfig = merge.smart(config, {
         module: {
             rules: [
@@ -45,4 +45,3 @@ function exec(conf, webpackExtend){
         }) + '\n')
     })
 }
-
