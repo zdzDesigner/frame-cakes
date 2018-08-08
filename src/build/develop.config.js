@@ -1,24 +1,19 @@
+"use strict"
+
 const childprocess = require('child_process')
 const webpackBase = require(process.cwd()+'/webpack.config.js')
-const _package = require(process.cwd()+'/package.json')
+const pkg = require(process.cwd()+'/package.json')
 const argv = require('./service/get-argv.js')
 const flowServer = require('./service/flow.js')
 const webpackServer = require('./service/webpack.js')
 const proxyMockServer = require('./service/proxy-mock.js')
-// const path = require('path')
-// const webpackPath = path.resolve(process.cwd(),'./node_modules/aife-vue-base/lib/build','./service/webpack.js')
-// const webpackProcess = childprocess.fork(webpackPath)
-// webpackProcess.send({
-//     webpackBase,
-//     webpackExtend,
-//     conf:{port, mock, isflow}
-// })
+
 
 module.exports = exec
 
 
 function exec(config, webpackExtend){
-    let publicPath = _package.publicPath
+    let publicPath = `/console/${pkg.name}/`
     let defaultPort = config.port 
     let domain = (config.proxy && config.proxy.domain) || false
     let recookie = config.proxy && config.proxy.recookie || false
@@ -27,8 +22,6 @@ function exec(config, webpackExtend){
     let proxyProcess = null
     port = port || defaultPort || 8088
     let conf = {port, mock, isflow}
-
-    
 
     // console.log({port, mock, isflow})
     let webpackCompiler = webpackServer(webpackBase, webpackExtend, conf)
@@ -68,21 +61,8 @@ function exec(config, webpackExtend){
             
         
         })
-
-        
-        
+  
     // console.log({watching})
     // console.log(webpackCompiler)
-    
-
 }
-
-
-
-
-
-
-
-
-
 
