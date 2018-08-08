@@ -1,32 +1,40 @@
-'use strict';
+"use strict"
 
-var _stringify = require('babel-runtime/core-js/json/stringify');
+var webpack = require('webpack')
+var merge = require('webpack-merge')
+var mock = require('filter-mock-loader')
+var UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+var config = require(process.cwd()+'/webpack.config.js')
 
-var _stringify2 = _interopRequireDefault(_stringify);
+module.exports = exec
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var webpack = require('webpack');
-var merge = require('webpack-merge');
-var config = require(process.cwd() + '/webpack.config.js');
-
-module.exports = exec;
-
-function exec(conf, webpackExtend) {
+function exec(conf, webpackExtend){
     var webpackConfig = merge.smart(config, {
-        plugins: [new webpack.optimize.DedupePlugin(), new webpack.DefinePlugin({
-            'APP_MOCK': (0, _stringify2.default)(false)
-        }), new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        })]
-    });
+        module: {
+            rules: [
+            {
+                test: /\.js$/,
+                loader: 'filter-mock-loader',
+                exclude: /node_modules/
+                
+            }]
+        },
+        plugins: [
+            new webpack.DefinePlugin({
+                'APP_MOCK': JSON.stringify(false)
+            }),
+            new UglifyJSPlugin({ uglifyOptions:{
+                compress: {
+                    warnings: false
+                }
+            }})
+        ]    
+    })
 
-    if (webpackExtend) webpackConfig = merge.smart(webpackConfig, webpackExtend);
+    if(webpackExtend) webpackConfig = merge.smart(webpackConfig,webpackExtend)
 
-    return webpack(webpackConfig, function (err, status) {
-        if (err) throw err;
+    webpack(webpackConfig, function(err, status) {
+        if (err) throw err
 
         process.stdout.write(status.toString({
             colors: true,
@@ -34,6 +42,6 @@ function exec(conf, webpackExtend) {
             children: false,
             chunks: false,
             chunkModules: false
-        }) + '\n');
-    });
+        }) + '\n')
+    })
 }

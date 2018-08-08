@@ -59,7 +59,7 @@ function convert(sub){
 
             if (compile && !rawUrl.match(/\{(.+?)\}/)) {
                 if (config) {
-                    logger('frame', '~url参数%s貌似无用', (0, _stringify2.default)(parse));
+                    logger('frame', '~url参数%s貌似无用', JSON.stringify(parse));
                 } else {
                     config = data;
                     data = parse;

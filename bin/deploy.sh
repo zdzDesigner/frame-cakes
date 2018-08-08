@@ -3,8 +3,8 @@
 # 查看参数
 echo $@
 
-name=item
-tag=0.0.1
+name=
+tag=
 NODE_ENV=pro
 
 # parse args
@@ -29,6 +29,15 @@ basedir=$(cd `dirname $0`; pwd)
 # basedir=$(dirname "$(readlink "$0" || echo "$(echo "$0" | sed -e 's,\\,/,g')")")
 # fi
 # echo $basedir
+
+
+# 判断变量
+if [[ (! -n "$tag") || (! -n "$name") ]]
+then
+	echo "Tag or Name is Null!"
+	exit 1
+fi
+
 
 # inject env
 export PRODUCT_TAG=$tag
