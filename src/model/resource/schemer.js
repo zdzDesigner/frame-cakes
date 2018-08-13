@@ -11,7 +11,13 @@ let {isType, isObject, isFunction,
  *     
  */
 export default schemer
-
+export {
+    isMatch,
+    compiler,
+    creater,
+    looper,
+    schemer
+}
 /**
  * [schemer 调起looper, 打印日志]
  * @param  {[type]} schema [description]
