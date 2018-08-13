@@ -8,8 +8,8 @@
   ],
   "scripts": {
     "start": "gulp",
-    "test":"mocha --watch --recursive",
-    "develop":"npm run start & npm run test"
+    "test": "mocha --watch --recursive",
+    "develop": "npm run start & npm run test"
   },
   "author": "zdzDesigner",
   "license": "ISC",
