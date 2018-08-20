@@ -164,7 +164,7 @@ function interceptors(){
 
         schema && schemer(schema, response.data, response.config.url)
         
-        console.log(response.data)
+        // console.log(response.data)
         return response
     })
 }
