@@ -31,7 +31,7 @@ function exec(conf, webpackExtend){
                     comments: false
                 },
                 mangle: {
-                    safari10: true,
+                    safari10: true
                 }
             }})
         ]    
