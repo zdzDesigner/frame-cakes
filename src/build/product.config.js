@@ -26,6 +26,12 @@ function exec(conf, webpackExtend){
             new UglifyJSPlugin({ uglifyOptions:{
                 compress: {
                     warnings: false
+                },
+                output: {
+                    comments: false
+                },
+                mangle: {
+                    safari10: true,
                 }
             }})
         ]    

@@ -206,6 +206,10 @@ auth.destroy()
 > zdzDesigner 2018.08.03
 > model/resource/schemer.js
 
+**0.5.0-alpha.7** UglifyJS fixbug mangle:safari10
+> zdzDesigner 2018.08.22
+> build/product.config.js
+
 
 
 
