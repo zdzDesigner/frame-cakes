@@ -210,6 +210,10 @@ auth.destroy()
 > zdzDesigner 2018.08.22
 > build/product.config.js
 
+**0.5.0-alpha.8** 添加 watchOptions pull 接口，ip :47 => 49
+> zdzDesigner 2018.08.31
+> build => base.config.js 、develop.config.js 、service/webpack.js
+
 
 
 

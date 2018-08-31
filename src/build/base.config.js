@@ -98,7 +98,7 @@ function getConfig(conf, webpackExtend) {
             new HtmlWebpackPlugin({
                 title:title,
                 template:'index.ejs',
-                env:ENV ? '':'http://172.16.20.47',
+                env:ENV ? '':'http://172.16.20.49',
                 chunks: ['app'],
                 inject:false,
                 minify: {

@@ -33,7 +33,7 @@ function webpackServer(webpackBase, webpackExtend, conf){
     })
 
     if(webpackExtend) webpackConfig = merge.smart(webpackConfig,webpackExtend)
-
+    
     if (isflow) {
         webpackConfig.module.rules.forEach(function (item) {
             if( item.loader == 'vue-loader'
@@ -46,11 +46,13 @@ function webpackServer(webpackBase, webpackExtend, conf){
             }
         })
     }
+    let { watchOptions } = webpackConfig
+    watchOptions.aggregateTimeout = watchOptions.aggregateTimeout || 300
     // console.log(webpackConfig)
     // console.log(webpackConfig.module.rules[0])
 
     let webpackCompiler = webpack(webpackConfig)
     // webpackCompiler.outputFileSystem = memoryFS
     // console.log({webpackCompiler})
-    return webpackCompiler
+    return { webpackCompiler, watchOptions }
 }

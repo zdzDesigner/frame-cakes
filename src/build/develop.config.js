@@ -5,14 +5,7 @@ const argv = require('./service/get-argv.js')
 const flowServer = require('./service/flow.js')
 const webpackServer = require('./service/webpack.js')
 const proxyMockServer = require('./service/proxy-mock.js')
-// const path = require('path')
-// const webpackPath = path.resolve(process.cwd(),'./node_modules/aife-vue-base/lib/build','./service/webpack.js')
-// const webpackProcess = childprocess.fork(webpackPath)
-// webpackProcess.send({
-//     webpackBase,
-//     webpackExtend,
-//     conf:{port, mock, isflow}
-// })
+
 
 module.exports = exec
 
@@ -31,13 +24,8 @@ function exec(config, webpackExtend){
     
 
     // console.log({port, mock, isflow})
-    let webpackCompiler = webpackServer(webpackBase, webpackExtend, conf)
-    let watching = webpackCompiler.watch({
-          // watchOptions 示例
-          // ignored: /node_modules/,
-          aggregateTimeout: 300,
-          poll: undefined
-        },(err, status) => {
+    let {webpackCompiler,watchOptions} = webpackServer(webpackBase, webpackExtend, conf)
+    let watching = webpackCompiler.watch(watchOptions,(err, status) => {
             if (err) throw err
             
             process.stdout.write(status.toString({
