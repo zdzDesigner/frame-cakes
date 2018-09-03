@@ -11,8 +11,7 @@ function exec(conf, webpackExtend){
 
     var webpackConfig = merge.smart(config, {
         module: {
-            rules: [
-            {
+            rules: [{
                 test: /\.js$/,
                 loader: 'filter-mock-loader',
                 exclude: /node_modules/
