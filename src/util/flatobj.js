@@ -1,5 +1,4 @@
-import base from './base.js'
-const { isObject } = base
+import { isObject } from './lang.js'
 
 export default function (data,callback){
     function loop(data, keys, key){

@@ -44,12 +44,20 @@ region_post:{
 
 当重复发送请求时，中断未响应的请求（但保留最后一个请求）
 
-payload:Boolean , default:false
+abort:Boolean||String , default:false||'before','after'
 
 ```js 
+// 重复点击，前面面请求阻拦
+// abort:true 和 'before' 表现相同
 region_post:{
     post:'./region/update?id={id}',
     abort:true
+}
+
+// 重复点击，后面请求阻拦
+region_post:{
+    post:'./region/update?id={id}',
+    abort:'after'
 }
 ```
 
@@ -57,7 +65,7 @@ region_post:{
 
 是否对url做编译
 
-payload:Boolean , default:true
+compile:Boolean , default:true
 
 ```js
 export default {
@@ -88,6 +96,61 @@ export default {
 ```
 *user_list生成 => Request URL:http://www.baidu.com/console/user/list*
 *user_list2生成 => Request URL:http://www.baidu.com/user/list*
+
+
+
+
+### api schema 配置
+
+> 目的：为了解决服务端返回数据不可信问题, 业务场景如下
+>> 期望的字段类型是 plan object=>{}, 但是服务端返回null, 或其他基本类型，获取属性时出现 the_key is not defined 错误，导致页面 block；plan array => [], 场景和 object 一致
+
+>> 期望为Number类型 返回String 如：'33', '33' => 33
+
+>> 测试同学可以通过 warn log 定位到 bug 根源，不必通过前端中转
+
+> 处理，根据以上经常出现的问题，做了如下两步主要处理
+>>  1. 抛错：抛出 warn 警告
+
+>>  2. 重写：根据定义的类型重写返回字段
+
+>>  响应结果如下：
+
+![avatar](/assets/readme/schema_warn.png)
+
+> 类型配置：服务端返回的JSON对象数据类型
+>>  引用类型：Object=> {}、Array=> []
+
+>>  基本类型：String、Number、Boolean
+
+> *规则：添加验证规则的字段开启验证，未添加的忽略验证*
+>>  *如下接口，在文档中有company字段，但验证规则中未添加company字段，则忽略company验证*
+
+```js
+export default {
+    ...
+    user_list:{
+        get:'./user/info',
+        // 这里既是schema配置
+        schema:{
+            data:{
+                user:{
+                    name:String
+                },
+                currentPermission:[Number],
+                groupList:[{
+                    companyId:Number,
+                    companyName:String,
+                    companyShortName:String
+                    ...
+                }]
+
+            }
+        }
+    }
+    ...
+}
+```
 
 
 
@@ -142,6 +205,30 @@ auth.destroy()
 **0.5.0-alpha.0** webpack develop 拆分子进程
 > zdzDesigner 2018.07.13
 > build/develop.config.js 
+
+**0.5.0-alpha.4** proxy-mock (window system & to @@)
+> zdzDesigner 2018.08.01
+> build/service/proxy-mock.js 
+
+**0.5.0-alpha.5** api schema
+> zdzDesigner 2018.08.03
+> model/resource/schemer.js
+
+**0.5.0-alpha.7** UglifyJS fixbug mangle:safari10
+> zdzDesigner 2018.08.22
+> build/product.config.js
+
+**0.5.0-alpha.8** 添加 watchOptions pull 接口，ip :47 => 49
+> zdzDesigner 2018.08.31
+> build => base.config.js 、develop.config.js 、service/webpack.js
+
+**0.5.0-alpha.9** abort 添加 after
+> zdzDesigner 2018.09.11
+> model/resource/convert.js
+
+
+
+
 
 
 

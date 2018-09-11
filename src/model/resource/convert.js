@@ -1,5 +1,6 @@
 import Axios from 'axios'
 import core from '../../util'
+import schemer from './schemer.js'
 
 
 const { parseText, logger } = core
@@ -13,7 +14,7 @@ const CancelToken = Axios.CancelToken
 
 function convert(sub){
 
-    var ROOT = sub.ROOT || ''
+    let ROOT = sub.ROOT || ''
     delete sub.ROOT
 
     return Object.keys(sub).reduce(function(ctx,key){
@@ -37,6 +38,7 @@ function convert(sub){
         let abort = item.abort || false
         let binary = item.binary || false
         let response = item.response || false
+        let schema = item.schema || false
         let withCredentials = item.withCredentials || false
         let compile = typeof item.compile == 'boolean' 
                             ? item.compile 
@@ -76,12 +78,12 @@ function convert(sub){
             if(~headRequest.indexOf(method)){
                 config = data
                 data = null
-                config = expandHeaders({config, contentType, apiname:key, baseURL:ROOT, abort, binary, withCredentials, mock})
+                config = expandHeaders({config, contentType, apiname:key, baseURL:ROOT, schema, abort, binary, withCredentials, mock})
                 pend = axios[method](url,config)
             }
 
             if(~bodyRequest.indexOf(method)){
-                config = expandHeaders({config, contentType, apiname:key, baseURL:ROOT, abort, binary, withCredentials, mock})
+                config = expandHeaders({config, contentType, apiname:key, baseURL:ROOT, schema, abort, binary, withCredentials, mock})
                 // console.log(data,type)
                 type == 'form' && (data = serialize(data))
                 pend = axios[method](url,data,config)
@@ -90,7 +92,7 @@ function convert(sub){
             // return pend
 
             pend.catch(function(err){
-                // console.log({err})
+                console.log({err})
             })
 
             return {
@@ -111,20 +113,25 @@ function convert(sub){
 
 function expandHeaders(params){
     let {config, contentType, apiname
-        , baseURL, abort, binary
+        , baseURL, schema, abort, binary
         , withCredentials, mock} = params
 
     config = config || {}
     config.headers = config.headers||{}
     config.headers['content-type'] = contentType
 
-
-    abort && (config.cancelToken = 
-                new CancelToken(function(cancel) {
-                    config.$$abort = cancel
-                }))
+    {
+        ~[true, 'before'].indexOf(abort) 
+            && (config.cancelToken = 
+                    new CancelToken(function(cancel) {
+                        config.$$abort = cancel
+                    }))
+        abort == 'after' 
+            && (config.$$abort = 'after')
+    }   
 
     config.$$apiname = apiname
+    config.$$schema = schema
     baseURL && (config.baseURL = baseURL)
     withCredentials && (config.withCredentials = withCredentials)
     binary && (config.responseType = 'arraybuffer')
@@ -145,17 +152,41 @@ function interceptors(){
         let apiname = config.$$apiname
         let request = requests[apiname] = requests[apiname] || []
 
-        if(request.length){
-            // console.log(requests, apiname)
-            request.shift().abort(`~ repeat request ${config.$$apiname} is abort`)
+        if(config.$$abort == 'after'){
+            request.abort = 'after'
+            if (request.length) return
+        }else{
+            if (request.length) {
+                request.shift().abort('~ repeat request ' + config.$$apiname + ' is abort')
+            }
         }
-        config.$$abort && request.push({ abort:config.$$abort })
+        config.$$abort && request.push({ abort: config.$$abort });    
         return config
+
     }, function (error) {
         return Promise.reject(error)
     })
+
+    axios.interceptors.response.use(function (response) {
+        // console.log(response.config)
+        let schema = response.config.$$schema
+        let apiname = response.config.$$apiname;
+        let request = requests[apiname]
+        if(request.abort = 'after') {
+            setTimeout(()=>{request.length = 0},300)
+        }
+
+        schema && schemer(schema, response.data, response.config.url)
+        
+        // console.log(response.data)
+        return response
+    })
 }
 interceptors()
+
+
+
+
 
 export default convert
 export { axios }

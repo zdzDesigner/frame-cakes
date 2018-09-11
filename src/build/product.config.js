@@ -11,8 +11,7 @@ function exec(conf, webpackExtend){
 
     var webpackConfig = merge.smart(config, {
         module: {
-            rules: [
-            {
+            rules: [{
                 test: /\.js$/,
                 loader: 'filter-mock-loader',
                 exclude: /node_modules/
@@ -26,6 +25,12 @@ function exec(conf, webpackExtend){
             new UglifyJSPlugin({ uglifyOptions:{
                 compress: {
                     warnings: false
+                },
+                output: {
+                    comments: false
+                },
+                mangle: {
+                    safari10: true
                 }
             }})
         ]    
