@@ -120,12 +120,15 @@ function expandHeaders(params){
     config.headers = config.headers||{}
     config.headers['content-type'] = contentType
 
-
-    ~[true, 'before'].indexOf(abort) && (config.cancelToken = 
-                new CancelToken(function(cancel) {
-                    config.$$abort = cancel
-                }))
-    abort == 'after' && (config.$$abort = 'after')
+    {
+        ~[true, 'before'].indexOf(abort) 
+            && (config.cancelToken = 
+                    new CancelToken(function(cancel) {
+                        config.$$abort = cancel
+                    }))
+        abort == 'after' 
+            && (config.$$abort = 'after')
+    }   
 
     config.$$apiname = apiname
     config.$$schema = schema
@@ -149,12 +152,17 @@ function interceptors(){
         let apiname = config.$$apiname
         let request = requests[apiname] = requests[apiname] || []
 
-        if(request.length){
-            // console.log(requests, apiname)
-            request.shift().abort(`~ repeat request ${config.$$apiname} is abort`)
+        if(config.$$abort == 'after'){
+            request.abort = 'after'
+            if (request.length) return
+        }else{
+            if (request.length) {
+                request.shift().abort('~ repeat request ' + config.$$apiname + ' is abort')
+            }
         }
-        config.$$abort && request.push({ abort:config.$$abort })
+        config.$$abort && request.push({ abort: config.$$abort });    
         return config
+
     }, function (error) {
         return Promise.reject(error)
     })
@@ -162,6 +170,11 @@ function interceptors(){
     axios.interceptors.response.use(function (response) {
         // console.log(response.config)
         let schema = response.config.$$schema
+        let apiname = response.config.$$apiname;
+        let request = requests[apiname]
+        if(request.abort = 'after') {
+            setTimeout(()=>{request.length = 0},300)
+        }
 
         schema && schemer(schema, response.data, response.config.url)
         

@@ -44,12 +44,20 @@ region_post:{
 
 当重复发送请求时，中断未响应的请求（但保留最后一个请求）
 
-payload:Boolean , default:false
+abort:Boolean||String , default:false||'before','after'
 
 ```js 
+// 重复点击，前面面请求阻拦
+// abort:true 和 'before' 表现相同
 region_post:{
     post:'./region/update?id={id}',
     abort:true
+}
+
+// 重复点击，后面请求阻拦
+region_post:{
+    post:'./region/update?id={id}',
+    abort:'after'
 }
 ```
 
@@ -57,7 +65,7 @@ region_post:{
 
 是否对url做编译
 
-payload:Boolean , default:true
+compile:Boolean , default:true
 
 ```js
 export default {
@@ -213,6 +221,10 @@ auth.destroy()
 **0.5.0-alpha.8** 添加 watchOptions pull 接口，ip :47 => 49
 > zdzDesigner 2018.08.31
 > build => base.config.js 、develop.config.js 、service/webpack.js
+
+**0.5.0-alpha.9** abort 添加 after
+> zdzDesigner 2018.09.11
+> model/resource/convert.js
 
 
 

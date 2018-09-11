@@ -1,7 +1,12 @@
 var gulp = require('gulp')
 var concat = require('gulp-concat')
 var babel = require('gulp-babel')
+var plumber = require('gulp-plumber')
 var clean = require('del')
+var fs = require('fs')
+var babelConfig = fs.readFileSync('./.babelrc')
+
+babelConfig = JSON.parse(babelConfig.toString('utf-8'))
 
 
 
@@ -12,10 +17,8 @@ var scripts =  {
 
 function build(){
     return gulp.src(scripts.src)
-        .pipe(babel({
-            presets: ["babel-preset-es2015","stage-0"],
-            plugins: ['transform-runtime',"transform-flow-strip-types"]
-        }))
+        .pipe(plumber())
+        .pipe(babel(babelConfig))
         .pipe(gulp.dest(scripts.dest))
 }
 
