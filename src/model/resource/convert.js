@@ -121,10 +121,11 @@ function expandHeaders(params){
     config.headers['content-type'] = contentType
 
 
-    abort && (config.cancelToken = 
+    ~[true, 'before'].indexOf(abort) && (config.cancelToken = 
                 new CancelToken(function(cancel) {
                     config.$$abort = cancel
                 }))
+    abort == 'after' && (config.$$abort = 'after')
 
     config.$$apiname = apiname
     config.$$schema = schema
