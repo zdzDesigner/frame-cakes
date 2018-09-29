@@ -226,6 +226,10 @@ auth.destroy()
 > zdzDesigner 2018.09.11
 > model/resource/convert.js
 
+**0.5.0-alpha.11** fix windows 代理问题 (proxy-mock:^1.2.4)
+> zdzDesigner 2018.09.29
+> build/service/proxy-mock.js
+
 
 
 
