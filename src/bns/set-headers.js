@@ -14,12 +14,12 @@ function authInit(){
 }
 
 function setToken (){
-    let token = local.$cookie.get('TOKEN')
-    let headers = getHeaders()
+    // let token = local.$cookie.get('TOKEN')
+    // let headers = getHeaders()
 
-    if(token != headers.get('Authorization')){
-        headers.set('Authorization', token)
-    }    
+    // if(token != headers.get('Authorization')){
+    //     headers.set('Authorization', token)
+    // }    
 
 }
 
