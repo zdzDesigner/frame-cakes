@@ -27,7 +27,8 @@ function exec(config, webpackExtend){
     // console.log({port, mock, isflow})
     let {webpackCompiler,watchOptions} = webpackServer(webpackBase, webpackExtend, conf)
     webpackCompiler.plugin('watch-close', (watching, callback) => {
-        console.log('watch-colse', process.pid)
+        console.log('watch-colse ....')
+        console.log('reset watch ....')
         // process.exit()
         watcher()
     })
