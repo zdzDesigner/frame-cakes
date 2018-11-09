@@ -226,6 +226,10 @@ auth.destroy()
 > zdzDesigner 2018.09.11
 > model/resource/convert.js
 
+**0.5.0-alpha.12** 清除请求头Authorization
+> zdzDesigner 2018.11.07
+> model/resource/convert.js
+
 
 
 
