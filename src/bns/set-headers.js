@@ -14,20 +14,20 @@ function authInit(){
 }
 
 function setToken (){
-    let token = local.$cookie.get('TOKEN')
-    let headers = getHeaders()
+    // let token = local.$cookie.get('TOKEN')
+    // let headers = getHeaders()
 
-    if(token != headers.get('Authorization')){
-        headers.set('Authorization', token)
-    }    
+    // if(token != headers.get('Authorization')){
+    //     headers.set('Authorization', token)
+    // }    
 
 }
 
 // 记住我
 function setRmemAuth(){
-    let rmemAuth = local.$cookie.get('RMEMAUTH')
-    let headers = getHeaders()
-    rmemAuth && headers.set('Rmem-auth', rmemAuth)
+    // let rmemAuth = local.$cookie.get('RMEMAUTH')
+    // let headers = getHeaders()
+    // rmemAuth && headers.set('Rmem-auth', rmemAuth)
 }
 
 // 设置headers
