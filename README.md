@@ -228,7 +228,12 @@ auth.destroy()
 
 **0.5.0-alpha.12** 清除请求头Authorization
 > zdzDesigner 2018.11.07
-> model/resource/convert.js
+> src/bns/set-headers.js
+
+**0.5.0-alpha.12** 监听webpack watch-close、并重启
+> zdzDesigner 2018.11.09
+> build/service/proxy-mock.js
+> build/develop.config.js
 
 
 
