@@ -5,16 +5,11 @@ const opn = require('opn')
 const NyanProgressPlugin = require('nyan-progress-webpack-plugin')
 // var BrowserSync = require('browser-sync-webpack-plugin')
 
-// process.on('message',function(conig){
-//     let {webpackBase, webpackExtend, conf} = conig
-//     webpackServer(webpackBase, webpackExtend, conf)
-// })
-
 module.exports = webpackServer
 
 function webpackServer(webpackBase, webpackExtend, conf){
     // console.log({conf})
-    // const memoryFS = new MemoryFS()
+    const memoryFS = new MemoryFS()
     let {mock, port, isflow} = conf
     let webpackConfig = merge.smart(webpackBase, {
         watch: true,
@@ -27,7 +22,7 @@ function webpackServer(webpackBase, webpackExtend, conf){
                 'APP_MOCK': JSON.stringify(mock),
                 'APP_PORT': JSON.stringify(port)
             }),
-            // new NyanProgressPlugin()
+            new NyanProgressPlugin()
 
         ]
     })
@@ -60,7 +55,7 @@ function webpackServer(webpackBase, webpackExtend, conf){
     webpackCompiler.plugin('done', (stats) => {
       stats.startTime -= timefix
     })
-    // webpackCompiler.outputFileSystem = memoryFS
+    webpackCompiler.outputFileSystem = memoryFS
     // console.log({webpackCompiler})
-    return { webpackCompiler, watchOptions }
+    return { webpackCompiler, watchOptions, memoryFS }
 }

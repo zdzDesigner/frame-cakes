@@ -25,17 +25,31 @@ function exec(config, webpackExtend){
     
 
     // console.log({port, mock, isflow})
-    let {webpackCompiler,watchOptions} = webpackServer(webpackBase, webpackExtend, conf)
+    let {webpackCompiler, watchOptions, memoryFS} = webpackServer(webpackBase, webpackExtend, conf)
     webpackCompiler.plugin('watch-close', (watching, callback) => {
         console.log('watch-colse ....')
         console.log('reset watch ....')
         // process.exit()
         watcher()
     })
+    webpackCompiler.plugin('done', (stats) => {
+        console.log('watch-done ....')
+        // console.log({stats})
+        console.log(stats.compilation.outputOptions)
+        // watcher()
+    })
     watcher()
     function watcher(){
         watching = webpackCompiler.watch(watchOptions,(err, status) => {
                 if (err) return
+
+                try{
+                    memoryFS.mkdirpSync("/console/test/dir")
+                    console.log('memoryFS dist:',memoryFS.readdirSync('/console'))
+                }catch(err){
+                    console.error(err.message)
+                }
+
                 process.stdout.write(status.toString({
                         colors: true,
                         modules: false,
