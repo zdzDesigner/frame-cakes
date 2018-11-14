@@ -15,23 +15,24 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 module.exports = getConfig
 
 function getConfig(conf, webpackExtend) {
-
-    var publicPath = conf.publicPath || '/'
-    var version = conf.version || 'v0.1.0'
-    var title = conf.title || '前端基础构建'
-    var dirname = conf.dirname || process.cwd()
     var ENV = process.env.NODE_ENV
-    console.log('dirname:',dirname)
+    var PUBLIC_PATH = conf.publicPath || '/'
+    var DOMAIN_PATH = ENV ? ('ENV_DOMAIN' + PUBLIC_PATH) : PUBLIC_PATH
+    var VERSION = conf.version || 'v0.1.0'
+    var TITLE = conf.title || '前端基础构建'
+    var DIR_NAME = conf.dirname || process.cwd()
+    
+    console.log('dirname:',DIR_NAME)
 
     var config = {
         entry: {
-            app: dirname + '/src/app/index.js'
+            app: DIR_NAME + '/src/app/index.js'
         },
         output: {
-            path:dirname + '/dist'+ publicPath,
+            path:DIR_NAME + '/dist'+ PUBLIC_PATH,
             filename: 'js/[name]_[chunkhash:8].js',
             chunkFilename: 'js/[name]_[chunkhash:8].js',
-            publicPath: publicPath
+            publicPath: DOMAIN_PATH
         },
 
         module: {
@@ -62,10 +63,10 @@ function getConfig(conf, webpackExtend) {
         },
         resolve: {
             alias: {
-                VUEX: path.resolve(dirname, './src/app/model/vuex'),
-                VIEW: path.resolve(dirname, './src/app/view'),
-                UTIL: path.resolve(dirname, './src/app/util'),
-                SERVICE: path.resolve(dirname, './src/app/service')
+                VUEX: path.resolve(DIR_NAME, './src/app/model/vuex'),
+                VIEW: path.resolve(DIR_NAME, './src/app/view'),
+                UTIL: path.resolve(DIR_NAME, './src/app/util'),
+                SERVICE: path.resolve(DIR_NAME, './src/app/service')
 
             }
         },
@@ -77,13 +78,13 @@ function getConfig(conf, webpackExtend) {
         },
         plugins: [
             new CleanWebpackPlugin(['dist'], {
-                root: dirname,
+                root: DIR_NAME,
                 verbose: true,
                 dry: false
             }),
             new webpack.DefinePlugin({
                 'APP_ENV': JSON.stringify(ENV),
-                'APP_VERSION': JSON.stringify(version)
+                'APP_VERSION': JSON.stringify(VERSION)
             }),
             new webpack.optimize.CommonsChunkPlugin({
                 names: ['manifest'].reverse()
@@ -96,9 +97,9 @@ function getConfig(conf, webpackExtend) {
             new InlineManifestWebpackPlugin(),
             new ExtractTextPlugin('style/app_[chunkhash:8].css'),
             new HtmlWebpackPlugin({
-                title:title,
+                title:TITLE,
                 template:'index.ejs',
-                env:ENV ? '':'http://172.16.20.49',
+                env: ENV ? 'ENV_DOMAIN' : 'http://172.16.20.49',
                 chunks: ['app'],
                 inject:false,
                 minify: {

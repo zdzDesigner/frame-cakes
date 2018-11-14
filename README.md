@@ -240,7 +240,12 @@ auth.destroy()
 > build/service/proxy-mock.js
 > build/develop.config.js
 
+**0.5.0-alpha.15** 域名调整
+> zdzDesigner 2018.11.12
 
+**0.5.0-alpha.16** 静态资源子域名
+> zdzDesigner 2018.11.14
+> build/base.config.js
 
 
 
