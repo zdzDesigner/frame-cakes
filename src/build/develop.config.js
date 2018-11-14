@@ -18,6 +18,7 @@ function exec(config, webpackExtend){
     let {port, mock, isflow} = argv
     let flowProcess = null
     let proxyProcess = null
+    let watching = null
     port = port || defaultPort || 8088
     let conf = {port, mock, isflow}
 
@@ -25,43 +26,50 @@ function exec(config, webpackExtend){
 
     // console.log({port, mock, isflow})
     let {webpackCompiler,watchOptions} = webpackServer(webpackBase, webpackExtend, conf)
-    let watching = webpackCompiler.watch(watchOptions,(err, status) => {
-            if (err) throw err
+    webpackCompiler.plugin('watch-close', (watching, callback) => {
+        console.log('watch-colse ....')
+        console.log('reset watch ....')
+        // process.exit()
+        watcher()
+    })
+    watcher()
+    function watcher(){
+        watching = webpackCompiler.watch(watchOptions,(err, status) => {
+                if (err) return
+                process.stdout.write(status.toString({
+                        colors: true,
+                        modules: false,
+                        children: false,
+                        chunks: false,
+                        chunkModules: false
+                    }) + '\n')
+
+                if(isflow && !flowProcess){
+                    flowProcess = flowServer()
+                }
+                
+                if (!proxyProcess) {
+                    proxyProcess = proxyMockServer(port, domain, recookie, publicPath)
+                    proxyProcess.on('close', function(code, sig){
+                        console.log('proxy process exit:',{code, sig})
+                    })
+
+                    process.on('exit', function(code, sig){
+                        console.log('main process exit: ',{code, sig})
+                        proxyProcess && proxyProcess.kill()
+                        flowProcess && flowProcess.kill()
+                    })
+                }
             
-            process.stdout.write(status.toString({
-                colors: true,
-                modules: false,
-                children: false,
-                chunks: false,
-                chunkModules: false
-            }) + '\n')
-        
-            if(isflow){
-                flowProcess = flowServer()
-            }
-
-            if (!proxyProcess) {
-                proxyProcess = proxyMockServer(port, domain, recookie, publicPath)
-                proxyProcess.on('exit', function(code, sig){
-                    console.log('proxy process exit:',{code, sig})
-                    process.kill(process.pid)
-                })
-            }
-
-            process.on('exit', function(code, sig){
-                console.log('main process exit: ',{code, sig})
-                proxyProcess && proxyProcess.kill()
-                flowProcess && flowProcess.kill()
             })
-            
         
-        })
-
-        
-        
-    // console.log({watching})
-    // console.log(webpackCompiler)
-    
+        // console.log({watching},{webpackCompiler})
+        // setTimeout(()=>{
+        //     watching.close(() => {
+        //       // console.log('Watching Ended.----------------------')
+        //     })
+        // },10000)
+    }
 
 }
 

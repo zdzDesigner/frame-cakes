@@ -27,7 +27,7 @@ function webpackServer(webpackBase, webpackExtend, conf){
                 'APP_MOCK': JSON.stringify(mock),
                 'APP_PORT': JSON.stringify(port)
             }),
-            new NyanProgressPlugin()
+            // new NyanProgressPlugin()
 
         ]
     })
@@ -52,6 +52,14 @@ function webpackServer(webpackBase, webpackExtend, conf){
     // console.log(webpackConfig.module.rules[0])
 
     let webpackCompiler = webpack(webpackConfig)
+    const timefix = 11000
+    webpackCompiler.plugin('watch-run', (watching, callback) => {
+      watching.startTime += timefix
+      callback()
+    })
+    webpackCompiler.plugin('done', (stats) => {
+      stats.startTime -= timefix
+    })
     // webpackCompiler.outputFileSystem = memoryFS
     // console.log({webpackCompiler})
     return { webpackCompiler, watchOptions }

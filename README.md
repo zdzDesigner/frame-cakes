@@ -226,9 +226,19 @@ auth.destroy()
 > zdzDesigner 2018.09.11
 > model/resource/convert.js
 
+
 **0.5.0-alpha.11** fix windows 代理问题 (proxy-mock:^1.2.4)
 > zdzDesigner 2018.09.29
 > build/service/proxy-mock.js
+
+**0.5.0-alpha.12** 清除请求头Authorization
+> zdzDesigner 2018.11.07
+> src/bns/set-headers.js
+
+**0.5.0-alpha.13** 监听webpack watch-close、并重启
+> zdzDesigner 2018.11.09
+> build/service/proxy-mock.js
+> build/develop.config.js
 
 
 
