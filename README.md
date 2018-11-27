@@ -247,6 +247,10 @@ auth.destroy()
 > zdzDesigner 2018.11.14
 > build/base.config.js
 
+**0.5.0-alpha.17** 内部资源跟随资源引用域
+> zdzDesigner 2018.11.27
+> build/base.config.js
+
 
 
 

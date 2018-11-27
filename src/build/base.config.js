@@ -54,11 +54,19 @@ function getConfig(conf, webpackExtend) {
                 loader: ExtractTextPlugin.extract('css-loader!sass-loader')
             },{
                 test: /\.(png|jpg)$/,
-                loader: 'url-loader?limit=18192&name=./images/[hash:8].[name].[ext]'
-            },
-            {
+                loader: 'url-loader',
+                options:{
+                    limit:18192,
+                    name:'images/[hash:8].[name].[ext]',
+                    publicPath:PUBLIC_PATH
+                }
+            }, {
                 test: /\.(svg|woff|woff2|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
-                loader:'file-loader?name=./style/fonts/[hash:8].[name].[ext]'
+                loader:'file-loader',
+                options:{
+                    name:'style/fonts/[hash:8].[name].[ext]',
+                    publicPath:PUBLIC_PATH
+                }
             }]
         },
         resolve: {
